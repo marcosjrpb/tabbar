@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tabbar/PrimeiraPagina.dart';
+import 'package:tabbar/SegundaPagina.dart';
+import 'package:tabbar/TerceiraPagina.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -7,24 +10,33 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
-  
-  TabController? _tabController;
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: 0,
+    );
   }
-  
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Abas"),
+        title: const Text("Abas"),
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(
               text: "Home",
               icon: Icon(Icons.home),
@@ -42,12 +54,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          Text("Primeira Pagina."),
-          Text("Segunda Pagina."),
-          Text("Terceira Pagina."),
+        children: const [
+          PrimeiraPagina(),
+          SegundaPagina(),
+          TerceiraPagina(),
         ],
-      ), // Aquí debes añadir el cuerpo de la pantalla principal
+      ),
     );
   }
 }
